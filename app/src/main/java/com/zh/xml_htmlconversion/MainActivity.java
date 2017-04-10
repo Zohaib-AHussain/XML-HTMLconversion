@@ -42,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
             Source xmlSource = new StreamSource(new BufferedInputStream(getAssets().open("sample1.xml")));
             Source xsltSource = new StreamSource(new BufferedInputStream(getAssets().open("spl.xsl")));
 
+
+            /*
+            * I have added the Xalan-2.7.1 and Serializer-2.7.1 after using jarjar. The xslt file (spl-common.xsl)
+            * requires additional extension which are not avaliable in android hence I had to add these extra jars.
+            *
+            * This is what I have come up with not sure if any of this is correct!
+            *
+            * */
+
             TransformerFactoryImpl transFact = new TransformerFactoryImpl();
             transFact.setURIResolver(new URIResolver() {
                 @Override
