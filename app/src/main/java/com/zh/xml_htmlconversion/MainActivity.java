@@ -129,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
+
+    //Below methods are needed for permission if running on Marshmallow (i.e. ignore)
+
     private void askForExternalStoragePermission() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
 
