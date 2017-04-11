@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import full.org.apache.xalan.processor.TransformerFactoryImpl;
 import full.org.apache.xalan.transformer.TransformerImpl;
+import full.org.apache.xml.serializer.utils.SystemIDResolver;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,15 +40,64 @@ public class MainActivity extends AppCompatActivity {
 
     private void xmlToHtml() {
         try {
+
+            /*
+            *
+            * The old solution using built in parser
+            *
+            * try {
+
+                    Source xmlSource = new StreamSource(context.getResources().openRawResource(R.raw.sample1));
+                    Source xsltSource = new StreamSource(context.getResources().openRawResource(R.raw.spl));
+
+
+                    TransformerFactory transFact = TransformerFactory.newInstance();
+                    transFact.setURIResolver(new URIResolver() {
+                        @Override
+                        public Source resolve(String href, String base) throws TransformerException {
+                            try {
+                                return new StreamSource(new BufferedInputStream(getAssets().open(href)));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                return null;
+                            }
+                        }
+                     });
+                    Transformer trans = transFact.newTransformer(xsltSource);
+
+                    File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/mydata.html");
+
+                    StreamResult result = new StreamResult(f);
+                    trans.transform(xmlSource, result);
+
+                } catch (TransformerConfigurationException e) {
+                    e.printStackTrace();
+                } catch (TransformerFactoryConfigurationError e) {
+                    e.printStackTrace();
+                } catch (TransformerException e) {
+                    e.printStackTrace();
+                }
+               }
+            *
+            *
+            * */
+
+
+            /*
+            *
+            * new solution, generated file is worst (empty) previously had some html data
+            * */
             Source xmlSource = new StreamSource(new BufferedInputStream(getAssets().open("sample1.xml")));
             Source xsltSource = new StreamSource(new BufferedInputStream(getAssets().open("spl.xsl")));
 
+            xmlSource.setSystemId(xmlSource.getSystemId());
+            xsltSource.setSystemId(xsltSource.getSystemId());
 
             /*
             * I have added the Xalan-2.7.1 and Serializer-2.7.1 after using jarjar. The xslt file (spl-common.xsl)
             * requires additional extension which are not avaliable in android hence I had to add these extra jars.
             *
-            * This is what I have come up with not sure if any of this is correct!
+            * This is what I have come up with not sure if any of this is correct
             *
             * */
 
