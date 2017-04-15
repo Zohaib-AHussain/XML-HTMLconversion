@@ -29,7 +29,7 @@ Copyright (C) 2002-2013 Health Level Seven, Inc. All Rights Reserved.
 	<xsl:template match="/">
 		<xsl:apply-templates mode="mixin" select="."/>
 	</xsl:template>
-	<xsl:variable name="root" select="/"/>
+	<xsl:variable name="roott" select="/"/>
 	<xsl:variable name="base-document-ref" select="/*/v3:relatedDocument[@typeCode='APND'][1]/v3:relatedDocument"/>
 	<xsl:variable name="base-document-id" select="$base-document-ref/*[self::v3:id or self::v3:setId][1]/@root"/>
 	<xsl:variable name="base-document-path" select="concat($core-base-url,'/',$base-document-id)"/>
